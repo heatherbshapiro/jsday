@@ -3,9 +3,15 @@ var router = express.Router();
 var config = require('../config');
 var https = require('https');
 var bodyParser = require('body-parser');
-var twilio = require('twilio');
+var twilio= require('twilio');
 
-
+var accountSid = process.env.ACCOUNTSID; 
+var authToken = process.env.AUTHTOKEN; 
+ 
+//require the Twilio module and create a REST client 
+var client = require('twilio')(accountSid, authToken); 
+  
+ 
  
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,13 +19,18 @@ router.get('/', function(req, res, next) {
 });
 
 
-// router.get('/post', function(req, res, next) {
-//   res.render('post');
-// });
 
-// router.post('/post', function(req,res){
-//   res.render('post', postData(req.body.link));
-// })
+
+
+
+router.get('/post', function(req, res, next) {
+  res.render('post');
+});
+
+router.post('/post', function(req,res){
+  res.render('post', postData(req.body.link));
+})
+
 
 router.get('/response',function(req,res){
     var twiml = new twilio.TwimlResponse();
