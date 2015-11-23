@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var http = require('http');
 
 var config = require('./config');
 
@@ -59,13 +60,10 @@ app.use(function(err, req, res, next) {
 });
 
 
-var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
-var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
-var twilio= require('twilio');
-var resp = new twilio.TwimlResponse();
+
  
 //require the Twilio module and create a REST client 
-var client = require('twilio')(accountSid, authToken); 
+// var client = require('twilio')(accountSid, authToken); 
  
 
 // client.sendMessage({
@@ -81,7 +79,6 @@ var client = require('twilio')(accountSid, authToken);
 //     }
 // });
 
-resp.message("Thank you for your text"); 
-console.log(resp.toString());
+
 
 module.exports = app;
