@@ -3,11 +3,8 @@ var router = express.Router();
 var config = require('../config');
 var https = require('https');
 var bodyParser = require('body-parser');
+var twilio = require('twilio');
 
-var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
-var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
-var twilio= require('twilio');
-// var resp = new twilio.TwimlResponse();
 
  
 /* GET home page. */
@@ -16,16 +13,13 @@ router.get('/', function(req, res, next) {
 });
 
 
+// router.get('/post', function(req, res, next) {
+//   res.render('post');
+// });
 
-
-router.get('/post', function(req, res, next) {
-  res.render('post');
-});
-
-router.post('/post', function(req,res){
-  res.render('post', postData(req.body.link));
-})
-
+// router.post('/post', function(req,res){
+//   res.render('post', postData(req.body.link));
+// })
 
 router.get('/response',function(req,res){
     var twiml = new twilio.TwimlResponse();
