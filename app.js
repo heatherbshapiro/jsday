@@ -68,18 +68,18 @@ var resp = new twilio.TwimlResponse();
 var client = require('twilio')(accountSid, authToken); 
  
 
-client.sendMessage({
-    to:'+17326103947', // the number for the phone in your pocket
-    from:'+18482060215', // your Twilio number
-    body:'I love you!' // The body of the text message
-}, function(error, message) {
-    // This callback is executed when the request completes
-    if (error) {
-        console.error('Dagnabit.  We couldn\'t send the message');
-    } else {
-        console.log('Message sent! Message id: '+message.sid);
-    }
-});
+// client.sendMessage({
+//     to:'+17326103947', // the number for the phone in your pocket
+//     from:'+18482060215', // your Twilio number
+//     body:'I love you!' // The body of the text message
+// }, function(error, message) {
+//     // This callback is executed when the request completes
+//     if (error) {
+//         console.error('Dagnabit.  We couldn\'t send the message');
+//     } else {
+//         console.log('Message sent! Message id: '+message.sid);
+//     }
+// });
 
 resp.message("Thank you for your text"); 
 console.log(resp.toString());
