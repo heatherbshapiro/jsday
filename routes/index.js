@@ -13,6 +13,10 @@ var authToken = process.env.AUTHTOKEN;
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
 
+var validUrl = require('valid-url');
+
+var url = "hello"
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -22,6 +26,7 @@ var MongoClient = require('mongodb').MongoClient;
 router.get('/response',function(req,res){
     client.messages.list(function(err,data){
         var messages = data.messages[0];
+        if(validUrl.isUri(messages.body)){
         MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
             if(!err) {
                 console.log("We are connected");
@@ -30,14 +35,23 @@ router.get('/response',function(req,res){
         
             var collection = db.collection('urls');
             var docs = [messages];
-        
+            
+            console.log(db.collection('urls'));
             collection.insert(docs, {w:1})
         });
-     var twiml = new twilio.TwimlResponse();
-     twiml.message(messages.body);
+         var twiml = new twilio.TwimlResponse();
+         twiml.message(messages.body);
 
-     res.writeHead(200, {'Content-Type': 'text/xml'});
-     res.end(twiml.toString());  
+         res.writeHead(200, {'Content-Type': 'text/xml'});
+         res.end(twiml.toString()); 
+        }
+        else{
+         var twiml = new twilio.TwimlResponse();
+         twiml.message("Please send a valid URL");
+
+         res.writeHead(200, {'Content-Type': 'text/xml'});
+         res.end(twiml.toString()); 
+        } 
    });
 });
 
