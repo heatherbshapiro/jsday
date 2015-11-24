@@ -59,22 +59,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var MongoClient = require('mongodb').MongoClient;
-// Connect to the db
-
-// mongodb://<dbuser>:<dbpassword>@ds042128.mongolab.com:42128/MongoLab-a
-
-// MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
-//   if(!err) {
-//     console.log("We are connected");
-//   }
-//   if(err) { return console.dir(err); }
-
-//   var collection = db.collection('urls');
-//   var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
-
-//   collection.insert(docs, {w:1})
-// });
-
-
 module.exports = app;
