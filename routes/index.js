@@ -58,7 +58,7 @@ router.get('/response',function(req,res){
         }
         else{
          var twiml = new twilio.TwimlResponse();
-         twiml.message("Please enter a valid URL");
+         twiml.message(messages.body);
 
          res.writeHead(200, {'Content-Type': 'text/xml'});
          res.end(twiml.toString()); 
