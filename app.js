@@ -59,24 +59,21 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var MongoClient = require('mongodb').MongoClient;
+// Connect to the db
 
+// mongodb://<dbuser>:<dbpassword>@ds042128.mongolab.com:42128/MongoLab-a
 
- 
-//require the Twilio module and create a REST client 
-// var client = require('twilio')(accountSid, authToken); 
- 
+// MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
+//   if(!err) {
+//     console.log("We are connected");
+//   }
+//   if(err) { return console.dir(err); }
 
-// client.sendMessage({
-//     to:'+17326103947', // the number for the phone in your pocket
-//     from:'+18482060215', // your Twilio number
-//     body:'I love you!' // The body of the text message
-// }, function(error, message) {
-//     // This callback is executed when the request completes
-//     if (error) {
-//         console.error('Dagnabit.  We couldn\'t send the message');
-//     } else {
-//         console.log('Message sent! Message id: '+message.sid);
-//     }
+//   var collection = db.collection('urls');
+//   var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+//   collection.insert(docs, {w:1})
 // });
 
 

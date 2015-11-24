@@ -5,88 +5,56 @@ var https = require('https');
 var bodyParser = require('body-parser');
 var twilio= require('twilio');
 
-var accountSid = process.env.ACCOUNTSID; 
-var authToken = process.env.AUTHTOKEN; 
+// var accountSid = process.env.ACCOUNTSID; 
+// var authToken = process.env.AUTHTOKEN; 
+
+var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
+var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
  
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
-  
  
- 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+var MongoClient = require('mongodb').MongoClient;
+// Connect to the db
 
+// mongodb://<dbuser>:<dbpassword>@ds042128.mongolab.com:42128/MongoLab-a
 
+// MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
+//   if(!err) {
+//     console.log("We are connected");
+//   }
+//   if(err) { return console.dir(err); }
 
+//   var collection = db.collection('urls');
+//   var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
 
-
-router.get('/post', function(req, res, next) {
-  res.render('post');
-});
-
-router.post('/post', function(req,res){
-  res.render('post', postData(req.body.link));
-})
+//   collection.insert(docs, {w:1})
+// });
 
 
 router.get('/response',function(req,res){
-    var twiml = new twilio.TwimlResponse();
-    twiml.message('Hello World!');
+    console.log("here");
+    MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
+     if(!err) {
+         console.log("We are connected");
+     }
+     if(err) { return console.dir(err); }
 
-    res.writeHead(200, {'Content-Type': 'text/xml'});
-    res.end(twiml.toString());
+     var collection = db.collection('urls');
+     var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
 
-    
-})
+     collection.insert(docs, {w:1})
+    });
+     var twiml = new twilio.TwimlResponse();
+     twiml.message('Hello World!');
+
+     res.writeHead(200, {'Content-Type': 'text/xml'});
+     res.end(twiml.toString());  
+});
 
 module.exports = router;
 
-function postData(link) {
-
-    var user = {
-        link: link,
-    };
-
-    var userString = JSON.stringify(user);
-
-    var headers = {
-        'Accept': "application/json",
-        'Content-Type': 'application/json',
-        'Content-Length': userString.length,
-        'X-ZUMO-APPLICATION': config.appkey
-    };
-
-    var options = {
-        host: config.mobileservices + '.azure-mobile.net',
-        port: 443,
-        path: '/tables/' + config.table,
-        method: 'POST',
-        headers: headers
-    };
-
-    // Setup the request.  The options parameter is
-    // the object we defined above.
-    var req = https.request(options, function (res) {
-        res.setEncoding('utf-8');
-
-        var responseString = '';
-
-        res.on('data', function (data) {
-            responseString += data;
-        });
-
-        res.on('end', function () {
-            var resultObject = JSON.parse(responseString);
-        });
-    });
-
-    req.on('error', function (e) {
-        // TODO: handle error.
-    });
-
-    req.write(userString);
-    req.end();
-}
