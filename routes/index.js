@@ -7,8 +7,8 @@ var twilio= require('twilio');
 var accountSid = process.env.ACCOUNTSID; 
 var authToken = process.env.AUTHTOKEN; 
 
- var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
- var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
+//  var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
+//  var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
  
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
@@ -25,13 +25,6 @@ var MongoClient = require('mongodb').MongoClient;
 
 var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 var regex = new RegExp(expression);
-var t = 'google.com';
-  if (t.match(regex) )
- {
-   console.log("Successful match");
- } else {
-   console.log("No match");
- }
  
 router.get('/response',function(req,res){
     client.messages.list(function(err,data){
@@ -58,7 +51,7 @@ router.get('/response',function(req,res){
         }
         else{
          var twiml = new twilio.TwimlResponse();
-         twiml.message(messages.body);
+         twiml.message("Please enter a valid URL");
 
          res.writeHead(200, {'Content-Type': 'text/xml'});
          res.end(twiml.toString()); 
