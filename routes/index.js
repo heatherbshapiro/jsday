@@ -25,11 +25,18 @@ var MongoClient = require('mongodb').MongoClient;
 
 var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 var regex = new RegExp(expression);
+var t = 'google.com';
+  if (t.match(regex) )
+ {
+   console.log("Successful match");
+ } else {
+   console.log("No match");
+ }
  
 router.get('/response',function(req,res){
     client.messages.list(function(err,data){
         var messages = data.messages[0];
-        if (t.match(messages.body)){
+        if (messages.body.match(regex)){
             MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
                 if(!err) {
                     console.log("We are connected");
