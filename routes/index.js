@@ -23,31 +23,34 @@ router.get('/', function(req, res, next) {
 
 var MongoClient = require('mongodb').MongoClient;
 
+var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+var regex = new RegExp(expression);
+ 
 router.get('/response',function(req,res){
     client.messages.list(function(err,data){
         var messages = data.messages[0];
-        if(validUrl.isUri(messages.body)){
-        MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
-            if(!err) {
-                console.log("We are connected");
-            }
-            if(err) { return console.dir(err); }
-        
-            var collection = db.collection('urls');
-            var docs = [messages];
+        if (t.match(messages.body)){
+            MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
+                if(!err) {
+                    console.log("We are connected");
+                }
+                if(err) { return console.dir(err); }
             
-            console.log(db.collection('urls'));
-            collection.insert(docs, {w:1})
-        });
-         var twiml = new twilio.TwimlResponse();
-         twiml.message(messages.body);
-
-         res.writeHead(200, {'Content-Type': 'text/xml'});
-         res.end(twiml.toString()); 
+                var collection = db.collection('urls');
+                var docs = [messages];
+                
+                console.log(db.collection('urls'));
+                collection.insert(docs, {w:1})
+            });
+            var twiml = new twilio.TwimlResponse();
+            twiml.message(messages.body);
+    
+            res.writeHead(200, {'Content-Type': 'text/xml'});
+            res.end(twiml.toString()); 
         }
         else{
          var twiml = new twilio.TwimlResponse();
-         twiml.message("Please send a valid URL");
+         twiml.message("Please enter a valid URL");
 
          res.writeHead(200, {'Content-Type': 'text/xml'});
          res.end(twiml.toString()); 
