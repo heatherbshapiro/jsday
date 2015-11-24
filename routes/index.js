@@ -7,8 +7,8 @@ var twilio= require('twilio');
 var accountSid = process.env.ACCOUNTSID; 
 var authToken = process.env.AUTHTOKEN; 
 
-//  var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
-//  var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
+ var accountSid = 'ACdf61bb67eb9d93e0eccbd760b293bd75'; 
+ var authToken = '61406275dc894bb906084f4c5a4a05c9'; 
  
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
@@ -36,7 +36,8 @@ var t = 'google.com';
 router.get('/response',function(req,res){
     client.messages.list(function(err,data){
         var messages = data.messages[0];
-        if (messages.body.match(regex)){
+        console.log(messages.body);
+        if ((messages.body).match(regex)){
             MongoClient.connect("mongodb://hshapiro93:5millie5@ds042128.mongolab.com:42128/MongoLab-a", function(err, db) {
                 if(!err) {
                     console.log("We are connected");
@@ -50,7 +51,7 @@ router.get('/response',function(req,res){
                 collection.insert(docs, {w:1})
             });
             var twiml = new twilio.TwimlResponse();
-            twiml.message("SUP YO");
+            twiml.message(messages.body);
     
             res.writeHead(200, {'Content-Type': 'text/xml'});
             res.end(twiml.toString()); 
