@@ -50,7 +50,7 @@ router.get('/response',function(req,res){
                 collection.insert(docs, {w:1})
             });
             var twiml = new twilio.TwimlResponse();
-            twiml.message(messages.body);
+            twiml.message("SUP YO");
     
             res.writeHead(200, {'Content-Type': 'text/xml'});
             res.end(twiml.toString()); 
